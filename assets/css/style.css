@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --heading-font: "Oswald", sans-serif;
+  --general-font: "Poppins", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+}
+h3 {
+  font-family: var(--heading-font);
+  margin-bottom: 28px !important;
+  font-weight: 800;
+}
+.container-xl {
+  margin-top: 35px;
+  font-family: var(--general-font);
+  height: 918px;
+}
+.head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+h2 {
+  font-family: var(--heading-font);
+  font-weight: 800;
+  color: #110f08;
+  font-size: 49px;
+  margin: 0;
+}
+.row {
+  gap: 0;
+}
+#todo-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+.form-control {
+  background-color: #ffffff;
+}
+.form-control:focus {
+  background-color: #ffffff;
+}
+.box {
+  min-height: 683px;
+  background-color: #ffffff;
+  text-align: center;
+  padding: 16px;
+}
+ul {
+  padding-left: 0 !important;
+  text-align: left;
+}
+.task {
+  background-color: #f8fafc;
+  color: #18181b;
+  list-style: none;
+  border: 2px solid #47556942;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline !important;
+  font-size: 18px;
+  cursor: move;
+  /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
+}
+.task i {
+  cursor: pointer;
+}
+.list-tables {
+  margin-top: 25px;
+}
+.is-dragging {
+  scale: 1.05;
+  background-color: rgb(50, 50, 50);
+  color: #ffffff;
+  border-radius: 6px;
+}
+.delete-icon {
+  color: red;
+  cursor: pointer;
+  font-size: 22px;
+}
+@media only screen and (max-width: 768px) {
+  .box {
+    min-height: auto;
+  }
+  .row {
+    gap: 10px;
+  }
+}
