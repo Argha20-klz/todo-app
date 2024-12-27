@@ -1,4 +1,3 @@
-// References to DOM elements
 const form = document.getElementById("todo-form");
 const input = document.getElementById("todo-input");
 const todoList = document.getElementById("todo"); // "To-Do" list container
@@ -52,6 +51,7 @@ function createTaskElement(taskText, status) {
     input.type = "text";
     input.value = taskTextSpan.textContent;
     input.classList.add("form-control");
+    input.name = "edited-task";
 
     // Replace the span with the input field
     newTask.replaceChild(input, taskTextSpan);
@@ -83,7 +83,6 @@ function createTaskElement(taskText, status) {
 
   newTask.addEventListener("dragend", () => {
     newTask.classList.remove("is-dragging");
-    saveOrder(status); // Save the new order of tasks after dragging
   });
 
   return newTask;
@@ -228,97 +227,16 @@ deleteAllIcon.addEventListener("click", () => {
     if (currentContainerId === "todo") oldStatus = "todo";
     if (currentContainerId === "in-progress") oldStatus = "inProgress";
     if (currentContainerId === "completed") oldStatus = "completed";
-    if (currentContainerId === "deleted") oldStatus = "deleted";
+    // if (currentContainerId === "deleted") oldStatus = "deleted";
 
     if (container.id === "todo") newStatus = "todo";
     if (container.id === "in-progress") newStatus = "inProgress";
     if (container.id === "completed") newStatus = "completed";
-    if (container.id === "deleted") newStatus = "deleted";
+    // if (container.id === "deleted") newStatus = "deleted";
 
     // Update local storage if the task moved to a new container
     if (oldStatus !== newStatus) {
       updateTaskStatus(taskText, oldStatus, newStatus);
     }
-  });
-});
-
-// Function to save the order of tasks after they are rearranged in the DOM
-function saveOrder() {
-  const tasks = JSON.parse(localStorage.getItem("tasks")) || {
-    todo: [],
-    inProgress: [],
-    completed: [],
-    deleted: [],
-  };
-
-  // Iterate over each container to save the new order
-  document.querySelectorAll(".list-container").forEach((zone) => {
-    const status = zone.id; // Get container status
-    const taskElements = zone.querySelectorAll(".task"); // Get all task elements in the container
-
-    // Ensure the task elements exist
-    if (taskElements.length === 0) return;
-
-    // Clear the existing tasks in local storage for this status
-    tasks[status] = [];
-
-    // Loop through tasks and push them into the new order
-    taskElements.forEach((task) => {
-      const taskTextElement = task.querySelector(".task-text");
-
-      if (taskTextElement) {
-        const taskText = taskTextElement.textContent.trim();
-        if (taskText) {
-          tasks[status].push({
-            text: taskText,
-            timestamp: task.dataset.timestamp || null, // Use timestamp for completed tasks
-          });
-        }
-      }
-    });
-  });
-
-  // Save the updated order to local storage
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
-// Add event listeners for drag and drop to trigger saveOrder after reordering tasks
-[todoList, inProgressList, completedList, deletedList].forEach((container) => {
-  container.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    const draggingTask = document.querySelector(".is-dragging");
-    container.appendChild(draggingTask);
-  });
-
-  container.addEventListener("drop", (e) => {
-    e.preventDefault();
-    const draggingTask = document.querySelector(".is-dragging");
-
-    if (!draggingTask) return;
-
-    const taskText = draggingTask
-      .querySelector(".task-text")
-      .textContent.trim();
-    const currentContainerId = draggingTask.parentElement.id;
-
-    // Determine the old and new statuses based on container IDs
-    let oldStatus, newStatus;
-    if (currentContainerId === "todo") oldStatus = "todo";
-    if (currentContainerId === "in-progress") oldStatus = "inProgress";
-    if (currentContainerId === "completed") oldStatus = "completed";
-    if (currentContainerId === "deleted") oldStatus = "deleted";
-
-    if (container.id === "todo") newStatus = "todo";
-    if (container.id === "in-progress") newStatus = "inProgress";
-    if (container.id === "completed") newStatus = "completed";
-    if (container.id === "deleted") newStatus = "deleted";
-
-    // Update local storage if the task moved to a new container
-    if (oldStatus !== newStatus) {
-      updateTaskStatus(taskText, oldStatus, newStatus);
-    }
-
-    // Save the order after task movement
-    saveOrder();
   });
 });
