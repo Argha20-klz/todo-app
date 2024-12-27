@@ -137,7 +137,7 @@ function loadTasks() {
   );
   tasks.completed.forEach((task) => {
     // Check if the task has been in "completed" for more than 12 hours
-    if (new Date().getTime() - task.timestamp > 60 * 1000) {
+    if (new Date().getTime() - task.timestamp > 12 * 60 * 60 * 1000) {
       // Remove task if it's older than 12 hours
       removeTaskFromLocalStorage(task.text, "completed");
     } else {
