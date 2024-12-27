@@ -20,6 +20,19 @@ droppables.forEach((zone) => {
 
     const taskText = curTask.querySelector(".task-text").textContent.trim();
 
+    // Determine the current status of the task
+    const currentStatus = getCurrentStatus(taskText);
+
+    // Prevent drop if task is being moved from "inProgress" or "completed" to "deleted"
+    if (
+      (currentStatus === "inProgress" || currentStatus === "completed") &&
+      zone.id === "deleted"
+    ) {
+      window.location.reload();
+      window.alert("Cannot delete a task that is in progress or completed.");
+      return; // Do nothing and prevent the drop
+    }
+
     // Determine the new status based on the drop zone's ID
     let newStatus;
     if (zone.id === "todo") newStatus = "todo";
@@ -83,7 +96,8 @@ const getCurrentStatus = (taskText) => {
   };
 
   for (const status in tasks) {
-    if (tasks[status].includes(taskText)) {
+    const task = tasks[status].find((task) => task.text === taskText);
+    if (task) {
       return status;
     }
   }
