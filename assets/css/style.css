@@ -51,6 +51,7 @@ h2 {
 }
 .form-control {
   background-color: #ffffff87;
+  border: none;
 }
 .form-control:focus {
   background-color: #ffffff;
