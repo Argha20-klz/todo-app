@@ -17,6 +17,25 @@ form.addEventListener("submit", (e) => {
     alert("Cannot add an empty task!");
     return;
   }
+  // new add
+  // Fetch existing tasks from local storage
+  const tasks = JSON.parse(localStorage.getItem("tasks")) || {
+    todo: [],
+    inProgress: [],
+    completed: [],
+    deleted: [],
+  };
+
+  // Check if the task already exists in any swim lane
+  const isDuplicate = Object.values(tasks).some((taskList) =>
+    taskList.some((task) => task.text.toLowerCase() === value.toLowerCase())
+  );
+
+  if (isDuplicate) {
+    alert("This task already exists!");
+    return;
+  }
+  // new add
 
   const newTask = createTaskElement(value, "todo");
   todoList.appendChild(newTask);
