@@ -98,6 +98,10 @@ ul {
   cursor: pointer;
   font-size: 22px;
 }
+.foot {
+  font-size: 14px;
+  color: #ffffffba;
+}
 @media only screen and (max-width: 768px) {
   .box {
     min-height: auto;
